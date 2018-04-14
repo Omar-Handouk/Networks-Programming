@@ -22,6 +22,7 @@
   4. https://www.geeksforgeeks.org/multi-threaded-chat-application-set-2/
   5. https://www.geeksforgeeks.org/java-lang-thread-class-java/
   6. https://www.geeksforgeeks.org/start-function-multithreading-java/
+  7. https://www.geeksforgeeks.org/introducing-threads-socket-programming-java/
 - **Stack OverFlow**
   1. https://stackoverflow.com/questions/13327571/in-a-simple-to-understand-explanation-what-is-runnable-in-java?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
   2. https://stackoverflow.com/questions/4615958/make-a-client-server-java-application?utm_medium=organic&utm_source=google_rich_qa&utm_campaign=google_rich_qa
