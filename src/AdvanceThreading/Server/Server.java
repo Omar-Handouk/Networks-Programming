@@ -33,8 +33,7 @@ public class Server {
             e.printStackTrace();
         }
 
-        while (true)
-        {
+        while (true) {
             try {
                 socket = serverSocket.accept();
 
@@ -57,6 +56,30 @@ public class Server {
                 e.printStackTrace();
             }
         }
+    }
+
+    public ServerSocket getServerSocket() {
+        return serverSocket;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public DataInputStream getMessageFromClientToHandler() {
+        return messageFromClientToHandler;
+    }
+
+    public DataOutputStream getMessageFromHandlerToRecipient() {
+        return messageFromHandlerToRecipient;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public static int getUserID() {
+        return userID;
     }
 
     public ArrayList<ClientHandler> getClientList() {

@@ -14,8 +14,7 @@ public class ReceiveMessage extends Thread {
     @Override
     public void run() {
 
-        while (true)
-        {
+        while (true) {
             try {
                 String message = toReceive.readUTF();
                 System.out.println(message); //Check if it prints in the client
@@ -23,5 +22,9 @@ public class ReceiveMessage extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    public DataInputStream getToReceive() {
+        return toReceive;
     }
 }

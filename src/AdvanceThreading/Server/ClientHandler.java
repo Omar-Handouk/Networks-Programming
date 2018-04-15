@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.util.StringTokenizer;
 
-public class ClientHandler extends Thread{
+public class ClientHandler extends Thread {
 
     private int clientID;
     private String clientName;
@@ -35,8 +35,7 @@ public class ClientHandler extends Thread{
 
         String receivedFromClient;
 
-        while (true)
-        {
+        while (true) {
             try {
                 receivedFromClient = messageFromClientToHandler.readUTF();
 
@@ -49,10 +48,8 @@ public class ClientHandler extends Thread{
 
                 //Need to handle exception of client not found.
 
-                for (ClientHandler client : server.getClientList())
-                {
-                    if (client.getClientID() == recipientID && client.isLoggedIn())
-                    {
+                for (ClientHandler client : server.getClientList()) {
+                    if (client.getClientID() == recipientID && client.isLoggedIn()) {
                         client.getMessageFromHandlerToRecipient().writeUTF(this.clientName + ": " + message);
                         break;
                     }
@@ -61,10 +58,6 @@ public class ClientHandler extends Thread{
                 e.printStackTrace();
             }
         }
-    }
-
-    public int getClientID() {
-        return clientID;
     }
 
     public String getClientName() {
@@ -81,6 +74,18 @@ public class ClientHandler extends Thread{
 
     public void setLoggedIn(boolean loggedIn) {
         this.loggedIn = loggedIn;
+    }
+
+    public int getClientID() {
+        return clientID;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public Server getServer() {
+        return server;
     }
 
     public DataInputStream getMessageFromClientToHandler() {

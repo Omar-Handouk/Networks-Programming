@@ -18,8 +18,7 @@ public class SendMessage extends Thread {
     @Override
     public void run() {
 
-        while (true)
-        {
+        while (true) {
             try {
                 String message = clientInput.nextLine();
                 toSend.writeUTF(message);
@@ -27,5 +26,13 @@ public class SendMessage extends Thread {
                 e.printStackTrace();
             }
         }
+    }
+
+    public Scanner getClientInput() {
+        return clientInput;
+    }
+
+    public DataOutputStream getToSend() {
+        return toSend;
     }
 }

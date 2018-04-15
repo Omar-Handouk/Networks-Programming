@@ -51,6 +51,42 @@ public class Client {
         receiveMessage.start();
     }
 
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public Socket getSocket() {
+        return socket;
+    }
+
+    public Scanner getClientInput() {
+        return clientInput;
+    }
+
+    public DataInputStream getToReceive() {
+        return toReceive;
+    }
+
+    public DataOutputStream getToSend() {
+        return toSend;
+    }
+
+    public String getIP_Address() {
+        return IP_Address;
+    }
+
+    public int getPort() {
+        return port;
+    }
+
+    public int getClientID() {
+        return clientID;
+    }
+
     public static void main(String[] args) {
         Client client = new Client("localhost", 5050, "Jupiter");
     }
