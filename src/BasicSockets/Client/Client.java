@@ -4,11 +4,12 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
+import java.util.Scanner;
 
 public class Client {
 
     private Socket socket; //Client Socket, used to establish a connection to server by server's IP and Port
-    private DataInputStream userInput; //User input via keyboard
+    private Scanner userInput; //User input via keyboard
     private DataInputStream remoteInput; //server response to client queries
     private DataOutputStream channelInput; //Stream used to transmit user's input to communication channel between him and server
 
@@ -20,7 +21,7 @@ public class Client {
 
             socket = new Socket(remoteIP, port); //Connect to server
             System.err.println(">> Connection Established");
-            userInput = new DataInputStream(System.in);
+            userInput = new Scanner(System.in);
             remoteInput = new DataInputStream(socket.getInputStream()); //Channel's output to current Client
             channelInput = new DataOutputStream(socket.getOutputStream()); //Client's Input to channel
 
@@ -35,7 +36,7 @@ public class Client {
         while (!userMessage.equals("quit")) {
             try {
                 System.err.println(">> ");
-                userMessage = userInput.readLine(); //Client's Message to be transmitted
+                userMessage = userInput.nextLine(); //Client's Message to be transmitted
                 channelInput.writeUTF(userMessage); //Transmission of message to the channel
 
                 System.out.println("Happy Trigger: " + remoteInput.readUTF()); //Remote Response
