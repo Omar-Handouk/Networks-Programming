@@ -4,13 +4,14 @@ import Exceptions.NonExistentClientException;
 import Exceptions.OfflineClientException;
 import Exceptions.WrongFormatException;
 
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.StringTokenizer;
 
-public class ClientHandler extends Thread {
+public class ClientHandler implements Runnable { // TODO Replace Thread extension to Runnable Implementation
 
     private int clientID;
     private String clientName;
@@ -23,6 +24,12 @@ public class ClientHandler extends Thread {
     private DataInputStream messageFromClientToHandler;
     private DataOutputStream messageFromHandlerToRecipient;
 
+    private final DateFormat date = new SimpleDateFormat("dd/MM/yyyy");
+    private final DateFormat time = new SimpleDateFormat("hh:mm:ss");
+    private Date DoT;
+
+    private FileWriter serverLogs; // TODO LOGS
+    private PrintWriter writer;
 
     public ClientHandler(int clientID, String clientName, Server server, Socket socket, DataInputStream messageFromClientToHandler, DataOutputStream messageFromHandlerToRecipient) {
         this.clientID = clientID;
@@ -32,13 +39,14 @@ public class ClientHandler extends Thread {
         this.socket = socket;
         this.messageFromClientToHandler = messageFromClientToHandler;
         this.messageFromHandlerToRecipient = messageFromHandlerToRecipient;
+        this.DoT = new Date();
     }
 
     @Override
     public void run() {
 
         try {
-            this.messageFromHandlerToRecipient.writeUTF("" + clientID);
+            this.messageFromHandlerToRecipient.writeUTF("Your Name: " + clientName + "\nYour ID: " + clientID + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,9 +55,12 @@ public class ClientHandler extends Thread {
 
         while (true) {
             try {
-                receivedFromClient = messageFromClientToHandler.readUTF();
+                receivedFromClient = messageFromClientToHandler.readUTF(); //Used to receive message from client
 
-                System.err.println(receivedFromClient);
+                System.out.println(">>>LOG:\nTime: " + time.format(DoT)
+                        + "\nDate: " + date.format(DoT)
+                        + "\nMessage: " + receivedFromClient
+                        + "\nFrom: " + this.toString());
 
                 if (!receivedFromClient.matches(".*\\S.*#\\d+#.*\\S.*"))
                     throw new WrongFormatException("Message Format is Incorrect");
@@ -128,5 +139,10 @@ public class ClientHandler extends Thread {
 
     public DataOutputStream getMessageFromHandlerToRecipient() {
         return messageFromHandlerToRecipient;
+    }
+
+    @Override
+    public String toString() {
+        return "Username: " + this.clientName + ", User ID: " + this.clientID;
     }
 }

@@ -3,7 +3,7 @@ package AdvanceThreading.Client;
 import java.io.DataInputStream;
 import java.io.IOException;
 
-public class ReceiveMessage extends Thread {
+public class ReceiveMessage implements Runnable { // TODO Replace Thread extension to Runnable Implementation
 
     private DataInputStream toReceive;
 

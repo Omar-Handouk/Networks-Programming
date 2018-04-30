@@ -1,5 +1,6 @@
 package AdvanceThreading.Client;
 
+import java.awt.*;
 import java.io.*;
 import java.net.Socket;
 import java.util.Scanner;
@@ -47,8 +48,11 @@ public class Client {
         SendMessage sendMessage = new SendMessage(clientInput, toSend);
         ReceiveMessage receiveMessage = new ReceiveMessage(toReceive);
 
-        sendMessage.start();
-        receiveMessage.start();
+        Thread sendMessageThread = new Thread(sendMessage);
+        Thread receiveMessageThread = new Thread(receiveMessage);
+
+        sendMessageThread.start();
+        receiveMessageThread.start();
     }
 
     public String getUserName() {
@@ -87,7 +91,7 @@ public class Client {
         return clientID;
     }
 
-    public static void main(String[] args) {
-        Client client = new Client("localhost", 5050, "Jupiter");
+    public static void main(String[] args) throws IOException{
+        new Client("localhost", 5050, "Pluto");
     }
 }
