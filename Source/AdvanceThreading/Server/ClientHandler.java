@@ -1,5 +1,9 @@
 package AdvanceThreading.Server;
 
+import Exceptions.NonExistentClientException;
+import Exceptions.OfflineClientException;
+import Exceptions.WrongFormatException;
+
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -33,28 +37,58 @@ public class ClientHandler extends Thread {
     @Override
     public void run() {
 
+        try {
+            this.messageFromHandlerToRecipient.writeUTF("" + clientID);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
         String receivedFromClient;
 
         while (true) {
             try {
                 receivedFromClient = messageFromClientToHandler.readUTF();
 
-                System.out.println(receivedFromClient);
+                System.err.println(receivedFromClient);
+
+                if (!receivedFromClient.matches(".*\\S.*#\\d+#.*\\S.*"))
+                    throw new WrongFormatException("Message Format is Incorrect");
 
                 StringTokenizer tokenize = new StringTokenizer(receivedFromClient, "#");
+
+                /* TODO Utilizing recipient name for message transmission
+                   TODO Confirming User Information with both User name and User ID
+                 */
+
                 String recipient = tokenize.nextToken();
                 int recipientID = Integer.parseInt(tokenize.nextToken());
                 String message = tokenize.nextToken();
 
-                //Need to handle exception of client not found.
+                boolean clientFound = false;
 
                 for (ClientHandler client : server.getClientList()) {
-                    if (client.getClientID() == recipientID && client.isLoggedIn()) {
-                        client.getMessageFromHandlerToRecipient().writeUTF(this.clientName + ": " + message);
-                        break;
+                    if (client.getClientID() == recipientID) {
+                        if (client.isLoggedIn()) {
+                            client.getMessageFromHandlerToRecipient().writeUTF(this.clientName + ": " + message);
+                            clientFound = true;
+                            break;
+                        } else
+                            throw new OfflineClientException("Client is Offline");
                     }
                 }
+
+                if (!clientFound)
+                    throw new NonExistentClientException("Client Does Not Exist");
+
+                receivedFromClient = null;
+
             } catch (IOException e) {
+                e.printStackTrace();
+            } catch (OfflineClientException e) {
+                e.printStackTrace();
+            } catch (NonExistentClientException e) {
+                e.printStackTrace();
+            } catch (WrongFormatException e) {
                 e.printStackTrace();
             }
         }

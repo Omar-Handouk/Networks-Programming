@@ -17,7 +17,7 @@ public class Server {
 
     private int port;
     private static int userID;
-    private ArrayList<ClientHandler> clientList;
+    private ArrayList<ClientHandler> clientList; // TODO Replace ArrayList with HashMap for further improvement in User search Speed
 
     public Server(int port) {
         this.port = port;
