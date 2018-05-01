@@ -4,7 +4,7 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class SendMessage implements Runnable { // TODO Replace Thread extension to Runnable Implementation
+public class SendMessage implements Runnable {
 
     private Scanner clientInput;
     private DataOutputStream toSend;

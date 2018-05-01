@@ -11,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.StringTokenizer;
 
-public class ClientHandler implements Runnable { // TODO Replace Thread extension to Runnable Implementation
+public class ClientHandler implements Runnable {
 
     private int clientID;
     private String clientName;
